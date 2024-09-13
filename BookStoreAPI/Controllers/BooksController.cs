@@ -68,7 +68,27 @@ namespace BookStoreAPI.Controllers
             return CreatedAtAction(nameof(GetBookById), new { id = book.Id }, book);
         }
 
-
-
+        /// <summary>
+        /// Updates a book by its id.
+        /// </summary>
+        /// <param name="id">The id of the book.</param>
+        /// <param name="book">The updated book.</param>
+        /// <returns>No content if successful, or not found if the book does not exist.</returns>
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult UpdateBook(int id, Book book)
+        {
+            try
+            {
+                book.Id = id;
+                _bookStoreDataService.UpdateBook(book);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+        }
     }
 }
