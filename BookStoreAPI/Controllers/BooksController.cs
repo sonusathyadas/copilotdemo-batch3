@@ -90,5 +90,42 @@ namespace BookStoreAPI.Controllers
                 return NotFound();
             }
         }
+        
+        
+        /// <summary>
+        /// Deletes a book by its id.
+        /// </summary>
+        /// <param name="id">The id of the book to delete.</param>
+        /// <returns>No content if successful, or not found if the book does not exist.</returns>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult DeleteBook(int id)
+        {
+            try
+            {
+                _bookStoreDataService.DeleteBook(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+        }
+
+        /// <summary>
+        /// Searches for books based on the provided search text.
+        /// </summary>
+        /// <param name="searchText">The search text.</param>
+        /// <returns>An enumerable collection of books matching the search text.</returns>
+        [HttpGet("search")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IEnumerable<Book> SearchBooks(string searchText)
+        {
+            return _bookStoreDataService.SearchBooks(searchText);
+        }
+
+
+
     }
 }
