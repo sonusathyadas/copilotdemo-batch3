@@ -135,6 +135,13 @@ namespace BookStoreAPI.Controllers
             return authors;
         }
 
+        [HttpGet("categories")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IEnumerable<string> GetCategories()
+        {
+            var categories = _bookStoreDataService.GetBooks().Select(book => book.Category).Distinct();
+            return categories;
+        }
 
 
     }
