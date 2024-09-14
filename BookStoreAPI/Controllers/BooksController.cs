@@ -127,5 +127,15 @@ namespace BookStoreAPI.Controllers
 
 
 
+        [HttpGet("authors")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IEnumerable<string> GetAuthors()
+        {
+            var authors = _bookStoreDataService.GetBooks().Select(book => book.Author).Distinct();
+            return authors;
+        }
+
+
+
     }
 }

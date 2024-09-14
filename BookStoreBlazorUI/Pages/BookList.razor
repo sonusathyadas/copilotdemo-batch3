@@ -1,0 +1,53 @@
+﻿@page "/books"
+@inject HttpClient Http
+@using BookStore.Shared.Entities
+
+<h3>Book List</h3>
+
+@if (books == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>No Of Pages</th>
+                <th>Language</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in books)
+            {
+                <tr>
+                    <td>@book.Id</td>
+                    <td>@book.Title</td>
+                    <td>@book.Author</td>
+                    <td>@book.NoOfPages</td>
+                    <td>@book.Language</td>
+                    <td>@book.Category</td>
+                    <td>@book.Price</td>
+                    <td><img src="@book.ImageUrl" alt="@book.Title" width="50" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Book> books;
+
+    protected override async Task OnInitializedAsync()
+    {
+        books = await Http.GetFromJsonAsync<List<Book>>("https://localhost:7213/api/books");
+    }
+
+    
+}
